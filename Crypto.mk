@@ -1,6 +1,7 @@
 #######################################
 # target static library
 include $(CLEAR_VARS)
+include $(LOCAL_PATH)/ndk-build-clear.mk
 LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
 
 # The static library should be used in only unbundled apps
@@ -12,6 +13,7 @@ LOCAL_MODULE:= libcrypto_static
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
 include $(LOCAL_PATH)/Crypto-config-target.mk
 include $(LOCAL_PATH)/android-config.mk
+include $(LOCAL_PATH)/ndk-build.mk
 
 # Replace cflags with static-specific cflags so we dont build in libdl deps
 LOCAL_CFLAGS_32 := $(openssl_cflags_static_32)
@@ -21,6 +23,7 @@ include $(BUILD_STATIC_LIBRARY)
 #######################################
 # target shared library
 include $(CLEAR_VARS)
+include $(LOCAL_PATH)/ndk-build-clear.mk
 LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
 
 # If we're building an unbundled build, don't try to use clang since it's not
@@ -38,31 +41,32 @@ LOCAL_MODULE:= libcrypto
 LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
 include $(LOCAL_PATH)/Crypto-config-target.mk
 include $(LOCAL_PATH)/android-config.mk
+include $(LOCAL_PATH)/ndk-build.mk
 include $(BUILD_SHARED_LIBRARY)
 
 #######################################
 # host shared library
-include $(CLEAR_VARS)
-LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
-LOCAL_CFLAGS += -DPURIFY
-LOCAL_LDLIBS += -ldl
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE:= libcrypto-host
-LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
-include $(LOCAL_PATH)/Crypto-config-host.mk
-include $(LOCAL_PATH)/android-config.mk
-include $(BUILD_HOST_SHARED_LIBRARY)
+# include $(CLEAR_VARS)
+# LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
+# LOCAL_CFLAGS += -DPURIFY
+# LOCAL_LDLIBS += -ldl
+# LOCAL_MODULE_TAGS := optional
+# LOCAL_MODULE:= libcrypto-host
+# LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
+# include $(LOCAL_PATH)/Crypto-config-host.mk
+# include $(LOCAL_PATH)/android-config.mk
+# include $(BUILD_HOST_SHARED_LIBRARY)
 
 ########################################
 # host static library, which is used by some SDK tools.
 
-include $(CLEAR_VARS)
-LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
-LOCAL_CFLAGS += -DPURIFY
-LOCAL_LDLIBS += -ldl
-LOCAL_MODULE_TAGS := optional
-LOCAL_MODULE:= libcrypto_static
-LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
-include $(LOCAL_PATH)/Crypto-config-host.mk
-include $(LOCAL_PATH)/android-config.mk
-include $(BUILD_HOST_STATIC_LIBRARY)
+# include $(CLEAR_VARS)
+# LOCAL_SHARED_LIBRARIES := $(log_shared_libraries)
+# LOCAL_CFLAGS += -DPURIFY
+# LOCAL_LDLIBS += -ldl
+# LOCAL_MODULE_TAGS := optional
+# LOCAL_MODULE:= libcrypto_static
+# LOCAL_ADDITIONAL_DEPENDENCIES := $(LOCAL_PATH)/android-config.mk $(LOCAL_PATH)/Crypto.mk
+# include $(LOCAL_PATH)/Crypto-config-host.mk
+# include $(LOCAL_PATH)/android-config.mk
+# include $(BUILD_HOST_STATIC_LIBRARY)
